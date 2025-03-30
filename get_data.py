@@ -6,10 +6,12 @@
 from sklearn.model_selection import train_test_split
 import shutil
 import os
+os.environ["KAGGLE_CONFIG_DIR"] = os.getcwd()
+
+from kaggle.api.kaggle_api_extended import KaggleApi
 import logging
 import argparse
 import pandas as pd
-from kaggle.api.kaggle_api_extended import KaggleApi
 import sys
 
 print(sys.executable)
@@ -21,7 +23,6 @@ logger = logging.getLogger(__name__)
 console_handler = logging.StreamHandler(sys.stdout)
 file_handler = logging.FileHandler("get_data.log")
 
-os.environ["KAGGLE_CONFIG_DIR"] = os.getcwd()
 api = KaggleApi()
 api.authenticate()
 

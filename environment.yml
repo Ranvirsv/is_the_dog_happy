@@ -323,4 +323,3 @@ dependencies:
       - torchaudio==2.6.0
       - torchvision==0.21.0
       - triton==3.2.0
-prefix: /home/eclipse/anaconda3/envs/DOG_EMOTION

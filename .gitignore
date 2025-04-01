@@ -175,6 +175,7 @@ cython_debug/
 
 # Data folder 
 /data/
+*_data/
 
 # Kaggle.json
 kaggle.json

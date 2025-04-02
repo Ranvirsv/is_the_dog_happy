@@ -175,6 +175,7 @@ cython_debug/
 
 # Data folder 
 /data/
+/standford_dog_data/
 
 # Kaggle.json
 kaggle.json

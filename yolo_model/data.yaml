@@ -1,0 +1,8 @@
+# data.yaml
+
+path: data/yolo_dataset  # Path to your dataset
+train: images/train
+val: images/val
+
+nc: 1  # Number of classes (dog)
+names: ['dog']  # Class names

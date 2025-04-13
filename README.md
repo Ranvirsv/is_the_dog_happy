@@ -31,33 +31,15 @@ After you got data in the stuctured format using the get_data.py, you use get_da
 2. Experiment Settings:
    * Taken a subset of images from imagenet data. (Approx. ~10000 images)
    * Our code split these images in training testing spit using 80-20 ratio.
-   * We use images from folder name `n02085620-Chihuahua` to `n02104029-kuvasz`. (It contains 60 directories).
-   * We use unseen test images from folder name `n02104365-schipperke`.
-   * folder structure: (Update directory path in notebook according to your environment)
-      --> dog-data/Imagenet/Annotations/
-          --> n02085620-Chihuahua
-              --> Image_annotation_1
-              --> Image_annotation_2
-      --> dog-data/Imagenet/Images/
-          --> n02085620-Chihuahua
-              --> Image_1.jpg
-              --> Image_2.jpg
-   * Above structure convert into below structure:
-      --> yolo_dataset
-         --> images
-               --> train
-                  --> image_1.jpg
-                  --> image_2.jpg
-               --> val
-                  --> image_1.jpg
-                  --> image_2.jpg
-         --> labels
-               --> train
-                  --> image_label_1.jpg
-                  --> image_label_2.jpg
-               --> val
-                  --> image_label_1.jpg
-                  --> image_label_2.jpg
+   * Copy Imagenet data in following folder structure:
+      --> Imagenet
+         --> Annotations
+              --> Image_Annotation_1
+              --> Image_Annotation_2
+         --> Image
+              --> Image_1
+              --> Image_2
+   * Run `process_data.py`. It will create train validation split based on above folder structure.
    * Copy `data.yaml`:
       ``yaml
          path: path-to-your-train-test-split-dataset  # Path to your dataset
@@ -70,7 +52,7 @@ After you got data in the stuctured format using the get_data.py, you use get_da
 
 * Need to run yolo model in your PC follow below steps:
    * pip install ultralytics
-   * best.pt available in yolo_mode/yolo_mode_files
+   * `best.pt` available in yolo_mode/yolo_mode_files
    * Copy `data.yaml`:
       ``yaml
          from ultralytics import YOLO
@@ -79,7 +61,8 @@ After you got data in the stuctured format using the get_data.py, you use get_da
       ``
 
 * Results
-   * <img src="./yolo_model/results/n02104365_10071.jpg" alt="dog_image_1.jpg">
-   * <img src="./yolo_model/results/n02104365_10319.jpg" alt="dog_image_2.jpg">
-   * <img src="./yolo_model/results/n02104365_10598.jpg" alt="dog_image_3.jpg">
+   * <img src="./yolo_model/results/10319080196_89c41839f2_b.jpg" alt="dog_image_1.jpg">
+   * <img src="./yolo_model/results/10415734845_f64e4d5502_b.jpg" alt="dog_image_2.jpg">
+   * <img src="./yolo_model/results/11222873115_9d2c306d36_b.jpg" alt="dog_image_3.jpg">
+   * <img src="./yolo_model/results/1166419201_2a189868f9_b.jpg" alt="dog_image_4.jpg">
 

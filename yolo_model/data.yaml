@@ -1,6 +1,6 @@
 # data.yaml
 
-path: data/yolo_dataset  # Path to your dataset
+path: /kaggle/input/dog-imagenet-data/yolo_imagenet_dataset  # Path to your dataset
 train: images/train
 val: images/val
 

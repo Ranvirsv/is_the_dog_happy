@@ -176,6 +176,7 @@ cython_debug/
 # Data folder 
 Imagenet/
 *data/
+Oxford/
 
 # Kaggle.json
 kaggle.json

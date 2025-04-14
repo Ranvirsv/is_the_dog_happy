@@ -27,42 +27,56 @@ After you got data in the stuctured format using the get_data.py, you use get_da
 
 ## Getting Started With YOLO Detector for Bounding box Experiment
 
-1. In Notebooks folder, Locate `bounding-box-generation-yolov8.ipynb` notebook for bounding box experiment using YOLOv8.
-2. Experiment Settings:
-   * Taken a subset of images from imagenet data. (Approx. ~10000 images)
-   * Our code split these images in training testing spit using 80-20 ratio.
-   * Copy Imagenet data in following folder structure:
-      --> Imagenet
-         --> Annotations
-              --> Image_Annotation_1
-              --> Image_Annotation_2
-         --> Image
-              --> Image_1
-              --> Image_2
-   * Run `process_data.py`. It will create train validation split based on above folder structure.
-   * Copy `data.yaml`:
-      ``yaml
-         path: path-to-your-train-test-split-dataset  # Path to your dataset
-         train: images/train
-         val: images/val
+1. Stanford Imagenet Dataset:
 
-         nc: 1  # Number of classes (dog)
-         names: ['dog']  # Class names
-      ``
+* Download Stanford Imagenet Dataset from offical website.
+* Restructure Images and Annotations in below heirarchy:
+   ```
+   Imagenet
+   │
+   └───Annotations
+   │   │   image1
+   │   │   image2
+   └───Images
+      │   image1.jpg
+      │   image2.jpg
+   ```
+* Run `process_imagenet_data.py` file to convert our dataset in yolo format.
+* For Training, we use `~10000` images and `10` epochs on the batch size of `16`.
+* For Predicting bounding box on an unseen data use below script:
+   ```
+   from ultralytics import YOLO
 
-* Need to run yolo model in your PC follow below steps:
-   * pip install ultralytics
-   * `best.pt` available in yolo_mode/yolo_mode_files
-   * Copy `data.yaml`:
-      ``yaml
-         from ultralytics import YOLO
-         model = YOLO("best.pt")
-         results = model.predict(source="test.jpg", conf=0.25, save=True)
-      ``
+   model = YOLO("<weight-file-path>.pt")  # Load trained model
 
-* Results
-   * <img src="./yolo_model/results/10319080196_89c41839f2_b.jpg" alt="dog_image_1.jpg">
-   * <img src="./yolo_model/results/10415734845_f64e4d5502_b.jpg" alt="dog_image_2.jpg">
-   * <img src="./yolo_model/results/11222873115_9d2c306d36_b.jpg" alt="dog_image_3.jpg">
-   * <img src="./yolo_model/results/1166419201_2a189868f9_b.jpg" alt="dog_image_4.jpg">
+   results = model.predict(source="<folder-path-of-unseen-images>", save=True)
+   ```
+* Above code predict bounding box all the images that resides in the source folder and save the results.
+* Weights File Path: `./yolo_model/imagenet_model/best.pt`
 
+2. Oxford Dataset:
+
+* Download Oxford Dataset from offical website.
+* Restructure Images and Annotations in below heirarchy:
+   ```
+   Oxford
+   │
+   └───Annotations
+   │   │   image1.xml
+   │   │   image2.xml
+   └───Images
+      │   image1.jpg
+      │   image2.jpg
+   ```
+* Run `process_oxford_data.py` file to convert our dataset in yolo format.
+* For Training, we use `~4000` images and `10` epochs on the batch size of `16`.
+* For Predicting bounding box on an unseen data use below script:
+   ```
+   from ultralytics import YOLO
+
+   model = YOLO("<weight-file-path>.pt")  # Load trained model
+
+   results = model.predict(source="<folder-path-of-unseen-images>", save=True)
+   ```
+* Above code predict bounding box all the images that resides in the source folder and save the results.
+* Weights File Path: `./yolo_model/oxford_model/best.pt`

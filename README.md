@@ -1,6 +1,6 @@
 # is_the_dog_happy
 
-Repository for the Dog emotion detection project
+We are trying to see, not just if a Computer Vision model is good for detecting emotions of a dog, but also how it vizulizes these results. What is the model looking for when trying to classify a doggo as "HAPPY", do the facial features make or break how a model predicts emotions in animals, does it view the same features differently or with different weightage if we tell it to focus on the face. 
 
 ## Setup Instruction
 

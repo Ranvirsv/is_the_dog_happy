@@ -176,6 +176,8 @@ cython_debug/
 # Data folder 
 Imagenet/
 *data/
+*annotations_face/
+*annotations
 Oxford/
 
 # Kaggle.json

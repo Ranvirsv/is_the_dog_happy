@@ -23,3 +23,60 @@ After you got data in the stuctured format using the get_data.py, you use get_da
 2. `from get_data_loaders import *`
 3. Use the functions `get_loaders` to get the dataloader<br>
    `train_loader, vali_loader, test_loader, num_classes = get_loaders("../data")`
+
+
+## Getting Started With YOLO Detector for Bounding box Experiment
+
+1. Stanford Imagenet Dataset:
+
+* Download Stanford Imagenet Dataset from offical website.
+* Restructure Images and Annotations in below heirarchy:
+   ```
+   Imagenet
+   │
+   └───Annotations
+   │   │   image1
+   │   │   image2
+   └───Images
+      │   image1.jpg
+      │   image2.jpg
+   ```
+* Run `process_imagenet_data.py` file to convert our dataset in yolo format.
+* For Training, we use `~10000` images and `10` epochs on the batch size of `16`.
+* For Predicting bounding box on an unseen data use below script:
+   ```
+   from ultralytics import YOLO
+
+   model = YOLO("<weight-file-path>.pt")  # Load trained model
+
+   results = model.predict(source="<folder-path-of-unseen-images>", save=True)
+   ```
+* Above code predict bounding box all the images that resides in the source folder and save the results.
+* Weights File Path: `./yolo_model/imagenet_model/best.pt`
+
+2. Oxford Dataset:
+
+* Download Oxford Dataset from offical website.
+* Restructure Images and Annotations in below heirarchy:
+   ```
+   Oxford
+   │
+   └───Annotations
+   │   │   image1.xml
+   │   │   image2.xml
+   └───Images
+      │   image1.jpg
+      │   image2.jpg
+   ```
+* Run `process_oxford_data.py` file to convert our dataset in yolo format.
+* For Training, we use `~4000` images and `10` epochs on the batch size of `16`.
+* For Predicting bounding box on an unseen data use below script:
+   ```
+   from ultralytics import YOLO
+
+   model = YOLO("<weight-file-path>.pt")  # Load trained model
+
+   results = model.predict(source="<folder-path-of-unseen-images>", save=True)
+   ```
+* Above code predict bounding box all the images that resides in the source folder and save the results.
+* Weights File Path: `./yolo_model/oxford_model/best.pt`

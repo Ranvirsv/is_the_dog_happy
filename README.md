@@ -14,6 +14,10 @@ Get the kaggle.json file (Insturctions: https://arc.net/l/quote/reqqlxbn)<br>
    - <b>NOTE</b>: If you already have the environment but there are changes in the environment.yml file, run `conda env update -f environment.yml --prune`
 4. Run the script `get_data.py`
 
+### Getting Annotations
+
+To test with face or body annotations (Bounding Boxes), run the script `get_annotations.py`, for face annotations use the flag `-f`
+
 ## Getting Data Loader
 
 After you got data in the stuctured format using the get_data.py, you use get_data_loaders.py to give you the train, val and test dataloader with number of classes 

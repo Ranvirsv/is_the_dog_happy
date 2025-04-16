@@ -1,10 +1,11 @@
 import os
-import cv2
 import logging
 import argparse
 import sys
 from ultralytics import YOLO
 import torch
+
+## REF: https://docs.ultralytics.com/modes/train/#usage-examples
 
 logger = logging.getLogger(__name__)
 

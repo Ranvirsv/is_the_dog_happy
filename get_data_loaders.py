@@ -4,6 +4,9 @@ from torchvision import datasets, transforms
 import numpy as np
 from PIL import Image
 import os
+import os, logging
+
+logger = logging.getLogger(__name__)
 
 ## REF: https://stackoverflow.com/questions/53530751/how-make-customised-dataset-in-pytorch-for-images-and-their-masks?utm_source=chatgpt.com
 
@@ -36,8 +39,8 @@ class FaceBBoxEmotionDataset(Dataset):
         with open(anno_path, "r") as f:
             nums = list(map(float, f.read().split()))
 
-        if len(nums) == 5:
-            nums = nums[1:]
+        if len(nums) > 4:
+            nums = nums[-4:]
 
         x1, y1, x2, y2 = nums
 
@@ -77,8 +80,22 @@ def make_image_anno_pairs(root_img, root_anno, subsets=("train","val","test")):
                 base, _   = os.path.splitext(fname)
                 anno_path = os.path.join(ann_dir, base + ".txt")
                 
-                if os.path.isfile(anno_path):
-                    pairs.append((img_path, anno_path, label_name))
+                if not os.path.isfile(anno_path):
+                    logger.warning(f"[MISSING] {anno_path} – annotation file not found, skipping")
+                    continue
+
+                # attempt parse
+                with open(anno_path) as f:
+                    nums = list(map(float, f.read().split()))
+
+                if len(nums) < 4:
+                    logger.warning(
+                        f"[TOO FEW POINTS] {anno_path} – found {len(nums)} values, need 4, skipping"
+                    )
+                    continue
+
+                pairs.append((img_path, anno_path, label_name))
+
                     
     return pairs
 

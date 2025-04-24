@@ -13,7 +13,7 @@ console_handler = logging.StreamHandler(sys.stdout)
 file_handler = logging.FileHandler("get_annotations.log")
 
 
-def main(source_dir, target_dir, face_only_mode):
+def main(source_dir, target_dir, face_only_mode, oxford_mode):
     """
     Takes the processed kaggle dataset and annotates it using the trained yolo model
     and stores bounding boxes (without classes) in a text file.
@@ -34,8 +34,10 @@ def main(source_dir, target_dir, face_only_mode):
     logger.info("Model on device: {}".format(device))
 
     path = "./yolo_model/yolo_model_files"
-    model_file = "oxford_model/best.pt" if face_only_mode else "imagenet_model/best.pt"
+    model_file = "oxford_model_using_imagenet_weights/best.pt" if face_only_mode else "oxford_model/best.pt" if (face_only_mode and oxford_mode) else "imagenet_model/best.pt"
     model_path = os.path.join(path, model_file)
+    
+    logger.info("Using {}".format(model_file))
 
     model = YOLO(model_path)
 
@@ -96,6 +98,14 @@ if __name__ == "__main__":
         help="Enable face_only mode, only draws bounding boxes for the face of the dog",
         action="store_true",
     )
+    
+    parser.add_argument(
+        "-o",
+        "--oxford_only",
+        dest="oxford_only",
+        help="Enable oxford_only mode, only draws bounding boxes for the face of the dog using model only trained on oxford data",
+        action="store_true",
+    )
 
     parser.add_argument(
         "-d", "--debug", dest="debug", help="Enable debug mode", action="store_true"
@@ -122,12 +132,12 @@ if __name__ == "__main__":
     logger.addHandler(file_handler)
 
     source_dir = os.path.join(os.getcwd(), "data")
-    target_dir = "./annotations_face/" if args.face_only else "./annotations/"
+    target_dir = "./annotations_face_oxford_only/" if (args.face_only and args.oxford_only) else "./annotations_face_combined/" if args.face_only else "./annotations/"
     os.makedirs(target_dir, exist_ok=True)
 
     logger.info("Starting Anotation Script")
     logger.info("Face only mode: {}".format(args.face_only))
 
-    main(source_dir, target_dir, args.face_only)
+    main(source_dir, target_dir, args.face_only, args.oxford_only)
 
     logger.info(f"Annotated dataset stored in {target_dir}")

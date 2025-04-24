@@ -4,6 +4,9 @@ from torchvision import datasets, transforms
 import numpy as np
 from PIL import Image
 import os
+import os, logging
+
+logger = logging.getLogger(__name__)
 
 ## REF: https://stackoverflow.com/questions/53530751/how-make-customised-dataset-in-pytorch-for-images-and-their-masks?utm_source=chatgpt.com
 
@@ -30,36 +33,55 @@ class FaceBBoxEmotionDataset(Dataset):
 
     def __getitem__(self, idx):
         img_path, anno_path, label_name = self.pairs[idx]
-
         img = Image.open(img_path).convert("RGB")
 
         with open(anno_path, "r") as f:
             nums = list(map(float, f.read().split()))
 
-        if len(nums) == 5:
-            nums = nums[1:]
+        if len(nums) % 4 == 0 and len(nums) >= 4:
+            boxes = [nums[i:i+4] for i in range(0, len(nums), 4)]
 
-        x1, y1, x2, y2 = nums
+        elif len(nums) >= 4:
+            logger.warning(
+                f"[BAD FORMAT] {anno_path} – "
+                f"{len(nums)} values not a multiple of 4, using last 4"
+            )
+            boxes = [nums[-4:]]
+
+        else:
+            logger.warning(
+                f"[TOO FEW POINTS] {anno_path} – "
+                f"found {len(nums)} values, need at least 4, skipping"
+            )
+            
+            W, H = img.size
+            mask_arr = np.zeros((H, W), dtype=np.uint8)
+            mask = Image.fromarray(mask_arr * 255)
+            img_t  = self.tf_img(img)
+            mask_t = self.tf_mask(mask)
+            x = torch.cat([img_t, mask_t], dim=0)
+            y = self.label_map[label_name]
+            return x, y
 
         W, H = img.size
-        x1, y1, x2, y2 = map(lambda v: int(round(v)), (x1,y1,x2,y2))
-        x1 = max(0, min(x1, W-1))
-        x2 = max(0, min(x2, W-1))
-        y1 = max(0, min(y1, H-1))
-        y2 = max(0, min(y2, H-1))
-
         mask_arr = np.zeros((H, W), dtype=np.uint8)
-        mask_arr[y1:y2, x1:x2] = 1
-        mask = Image.fromarray(mask_arr * 255) 
 
+        for x1, y1, x2, y2 in boxes:
+            x1, y1, x2, y2 = map(lambda v: int(round(v)), (x1, y1, x2, y2))
+            x1 = max(0, min(x1, W-1))
+            x2 = max(0, min(x2, W-1))
+            y1 = max(0, min(y1, H-1))
+            y2 = max(0, min(y2, H-1))
+            mask_arr[y1:y2, x1:x2] = 1
+
+        mask = Image.fromarray(mask_arr * 255)
         img_t  = self.tf_img(img)
         mask_t = self.tf_mask(mask)
-
         x = torch.cat([img_t, mask_t], dim=0)
 
         y = self.label_map[label_name]
-
         return x, y
+
 
 def make_image_anno_pairs(root_img, root_anno, subsets=("train","val","test")):
     pairs = []
@@ -77,8 +99,21 @@ def make_image_anno_pairs(root_img, root_anno, subsets=("train","val","test")):
                 base, _   = os.path.splitext(fname)
                 anno_path = os.path.join(ann_dir, base + ".txt")
                 
-                if os.path.isfile(anno_path):
-                    pairs.append((img_path, anno_path, label_name))
+                if not os.path.isfile(anno_path):
+                    logger.warning(f"[MISSING] {anno_path} – annotation file not found, skipping")
+                    continue
+
+                with open(anno_path) as f:
+                    nums = list(map(float, f.read().split()))
+
+                if len(nums) < 4:
+                    logger.warning(
+                        f"[TOO FEW POINTS] {anno_path} – found {len(nums)} values, need 4, skipping"
+                    )
+                    continue
+
+                pairs.append((img_path, anno_path, label_name))
+
                     
     return pairs
 

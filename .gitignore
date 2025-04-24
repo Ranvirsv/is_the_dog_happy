@@ -177,7 +177,8 @@ cython_debug/
 Imagenet/
 *data/
 *annotations_face/
-*annotations
+*annotations/
+*annotation_face_combined/
 Oxford/
 
 # Kaggle.json

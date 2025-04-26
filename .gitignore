@@ -178,7 +178,8 @@ Imagenet/
 *data/
 *annotations_face/
 *annotations/
-*annotation_face_combined/
+*annotations_face_combined/
+*PlumSmile_data/
 Oxford/
 
 # Kaggle.json

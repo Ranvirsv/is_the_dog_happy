@@ -34,9 +34,17 @@ def main(source_dir, target_dir, face_only_mode, oxford_mode):
     logger.info("Model on device: {}".format(device))
 
     path = "./yolo_model/yolo_model_files"
-    model_file = "oxford_model_using_imagenet_weights/best.pt" if face_only_mode else "oxford_model/best.pt" if (face_only_mode and oxford_mode) else "imagenet_model/best.pt"
+    model_file = (
+        "oxford_model_using_imagenet_weights/best.pt"
+        if face_only_mode
+        else (
+            "oxford_model/best.pt"
+            if (face_only_mode and oxford_mode)
+            else "imagenet_model/best.pt"
+        )
+    )
     model_path = os.path.join(path, model_file)
-    
+
     logger.info("Using {}".format(model_file))
 
     model = YOLO(model_path)
@@ -98,7 +106,7 @@ if __name__ == "__main__":
         help="Enable face_only mode, only draws bounding boxes for the face of the dog",
         action="store_true",
     )
-    
+
     parser.add_argument(
         "-o",
         "--oxford_only",
@@ -132,7 +140,11 @@ if __name__ == "__main__":
     logger.addHandler(file_handler)
 
     source_dir = os.path.join(os.getcwd(), "data")
-    target_dir = "./annotations_face_oxford_only/" if (args.face_only and args.oxford_only) else "./annotations_face_combined/" if args.face_only else "./annotations/"
+    target_dir = (
+        "./annotations_face_oxford_only/"
+        if (args.face_only and args.oxford_only)
+        else "./annotations_face_combined/" if args.face_only else "./annotations/"
+    )
     os.makedirs(target_dir, exist_ok=True)
 
     logger.info("Starting Anotation Script")

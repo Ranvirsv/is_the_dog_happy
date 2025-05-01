@@ -21,17 +21,18 @@ logger = logging.getLogger(__name__)
 console_handler = logging.StreamHandler(sys.stdout)
 file_handler = logging.FileHandler("get_PlumSmile_data.log")
 
+
 def download_dataset(zip_url, download_path):
     if download_path.exists():
         logger.info(f"Archive already present at {download_path}")
         return
-    
+
     logger.info(f"Downloading dataset from {zip_url} ...")
 
     req = Request(zip_url, headers={"User-Agent": "python-urllib"})
 
     try:
-        with urlopen(req) as resp, open(download_path, 'wb') as out:
+        with urlopen(req) as resp, open(download_path, "wb") as out:
             shutil.copyfileobj(resp, out)
 
         logger.info("Download complete.")
@@ -44,7 +45,7 @@ def download_dataset(zip_url, download_path):
 def extract_zip(zip_path, extract_to):
     logger.info(f"Extracting {zip_path} -> {extract_to}")
 
-    with zipfile.ZipFile(zip_path, 'r') as z:
+    with zipfile.ZipFile(zip_path, "r") as z:
         z.extractall(extract_to)
 
     logger.info("Extraction complete.")
@@ -64,7 +65,11 @@ def prepare_splits(src_train, src_test, dst_root):
                 all_imgs = sorted(src_dir.glob("*"))
                 n_val = int(len(all_imgs) * 0.25)
                 val_imgs = set(random.sample(all_imgs, n_val))
-                imgs_to_copy = val_imgs if split == "val" else [p for p in all_imgs if p not in val_imgs]
+                imgs_to_copy = (
+                    val_imgs
+                    if split == "val"
+                    else [p for p in all_imgs if p not in val_imgs]
+                )
             else:
                 imgs_to_copy = sorted(src_dir.glob("*"))
 
@@ -80,13 +85,18 @@ def main():
     )
 
     parser.add_argument(
-        "-o", "--output-dir", type=Path, default=Path("./PlumSmile_data/dog_emotions"),
-        help="Root directory where train/val/test folders will be created"
+        "-o",
+        "--output-dir",
+        type=Path,
+        default=Path("./PlumSmile_data/dog_emotions"),
+        help="Root directory where train/val/test folders will be created",
     )
 
     parser.add_argument(
-        "--work-dir", type=Path, default=Path("work"),
-        help="Temporary working directory for downloads and extraction"
+        "--work-dir",
+        type=Path,
+        default=Path("work"),
+        help="Temporary working directory for downloads and extraction",
     )
 
     parser.add_argument(
@@ -109,7 +119,7 @@ def main():
     logger.setLevel(logger_level)
     logger.addHandler(console_handler)
     logger.addHandler(file_handler)
-    
+
     # Prepare dirs
     args.work_dir.mkdir(exist_ok=True)
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -126,10 +136,7 @@ def main():
     src_test = base / "test"
 
     # Prepare splits
-    prepare_splits(
-        src_train, src_test,
-        args.output_dir
-    )
+    prepare_splits(src_train, src_test, args.output_dir)
 
     shutil.rmtree(args.work_dir)
 

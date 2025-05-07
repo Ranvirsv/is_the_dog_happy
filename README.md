@@ -10,6 +10,7 @@ Get the kaggle.json file (Insturctions: https://arc.net/l/quote/reqqlxbn)<br>
 
 1. Clone the repository
 2. Run `conda env create -f environment.yml` (Pytorch has removed their conda packages, if you run into errors with pytorch, reinstall using pip)
+   - <b>NOTE</b>: This env file is for linux systems
 3. Activate the environment `conda activate DOG_EMOTION`
    - <b>NOTE</b>: If you already have the environment but there are changes in the environment.yml file, run `conda env update -f environment.yml --prune`
 4. Run the script `get_data.py`

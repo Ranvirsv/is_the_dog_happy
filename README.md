@@ -84,3 +84,28 @@ After you got data in the stuctured format using the get_data.py, you use get_da
    ```
 * Above code predict bounding box all the images that resides in the source folder and save the results.
 * Weights File Path: `./yolo_model/oxford_model/best.pt`
+
+## Deep feature factorization for ViT model feature attentions on dog images
+
+* Deep Feature Factorization refers to the unsupervised decomposition of deep convolutional features into additive parts using methods like NMF. Given a set of activation maps from a CNN, DFF:
+   * Projects them into a 2D representation across channels and spatial dimensions.
+   * Applies NMF to extract latent "factors" that correspond to interpretable semantic regions.
+   * Visualizes these factors as heatmaps overlaid on the original input image.
+* This allows us to:
+   * Interpret CNN behavior,
+   * Discover object parts without supervision
+   * Analyze semantic consistency across samples.
+
+### Notebook Structure
+
+* The notebook includes:
+   * Preprocessing: Loads and normalizes input images using torchvision transforms.
+   * Model Forward Pass: Extracts convolutional features from a pre-trained network (e.g., ViT).
+   * Activation Extraction: Collects feature maps from intermediate layers.
+   * NMF Decomposition: Applies NMF to the flattened feature maps to extract part-based factors.
+   * Visualization: Maps decomposed factors to image space using heatmaps.
+
+### Outputs:
+
+* ![Output1](dff_outputs/image_1.png)
+* ![Output2](dff_outputs/image_2.png)

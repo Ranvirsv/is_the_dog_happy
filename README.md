@@ -13,6 +13,9 @@ Get the kaggle.json file (Insturctions: https://arc.net/l/quote/reqqlxbn)<br>
 3. Activate the environment `conda activate DOG_EMOTION`
    - <b>NOTE</b>: If you already have the environment but there are changes in the environment.yml file, run `conda env update -f environment.yml --prune`
 4. Run the script `get_data.py`
+5. Run the script `get_PlumSmile_data.py`
+
+You will need both the datafile to run the entier notebook.
 
 ### Getting Annotations
 
@@ -21,21 +24,22 @@ You will need to run the script 2 times <br>
 - `get_annotations.py -f -o` for oxford only annotation model
 - `get_annotations.py -f` for the Mulit-Stage trained model
 
-Once you run those 2 commands the annotations will automatically by generated in the structured folder.
-Then you will need to make some changes in the Setup cell inside the `/Notebooks/ViT.ipynb` file.
-The changes are listed bellow.
+Once you run those 2 commands the annotations will automatically by generated in the structured folder.<br>
+Then you will need to make some changes in the Setup cell inside the `/Notebooks/ViT.ipynb` file.<br>
+Change the path in the setup file to `sys.path.insert(1, '/path/to/is_the_dog_happy')`<br>
+Now You can run the entier [ViT.ipynb](Notebooks/VIT.ipynb) notebook file.<br>
+
+For more Information about DataLoader, YOLO models, DFF and GradCAM see below.
 
 ## Getting Data Loader
 
-After you got data in the stuctured format using the get_data.py, you use get_data_loaders.py to give you the train, val and test dataloader with number of classes 
+After you got data, you use get_data_loaders.py to give you the train, val and test dataloader with number of classes 
 
 1. `import sys` <br>
    `sys.path.insert(1, '/path/to/is_the_dog_happy')`
 2. `from get_data_loaders import *`
 3. Use the functions `get_loaders` to get the dataloader<br>
    `train_loader, vali_loader, test_loader, num_classes = get_loaders("../data")`
-
-Now You can run the entier `Vit.ipynb` notebook file.
 
 
 ## Getting Started With YOLO Detector for Bounding box Experiment

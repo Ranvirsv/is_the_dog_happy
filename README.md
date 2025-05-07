@@ -16,7 +16,14 @@ Get the kaggle.json file (Insturctions: https://arc.net/l/quote/reqqlxbn)<br>
 
 ### Getting Annotations
 
-To test with face or body annotations (Bounding Boxes), run the script `get_annotations.py`, for face annotations use the flag `-f`
+To test with face or body annotations (Bounding Boxes), run the script `get_annotations.py`, for face annotations use the flag `-f` <br>
+You will need to run the script 2 times <br>
+- `get_annotations.py -f -o` for oxford only annotation model
+- `get_annotations.py -f` for the Mulit-Stage trained model
+
+Once you run those 2 commands the annotations will automatically by generated in the structured folder.
+Then you will need to make some changes in the Setup cell inside the `/Notebooks/ViT.ipynb` file.
+The changes are listed bellow.
 
 ## Getting Data Loader
 
@@ -27,6 +34,8 @@ After you got data in the stuctured format using the get_data.py, you use get_da
 2. `from get_data_loaders import *`
 3. Use the functions `get_loaders` to get the dataloader<br>
    `train_loader, vali_loader, test_loader, num_classes = get_loaders("../data")`
+
+Now You can run the entier `Vit.ipynb` notebook file.
 
 
 ## Getting Started With YOLO Detector for Bounding box Experiment

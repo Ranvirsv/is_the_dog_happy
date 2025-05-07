@@ -56,11 +56,6 @@ class FaceBBoxEmotionDataset(Dataset):
             boxes = [nums[-4:]]
 
         else:
-            logger.warning(
-                f"[TOO FEW POINTS] {anno_path}: "
-                f"found {len(nums)} values, need at least 4, skipping"
-            )
-
             W, H = img.size
             mask_arr = np.zeros((H, W), dtype=np.uint8)
             mask = Image.fromarray(mask_arr * 255)
@@ -116,9 +111,6 @@ def make_image_anno_pairs(root_img, root_anno, subsets=("train", "val", "test"))
                     nums = list(map(float, f.read().split()))
 
                 if len(nums) < 4:
-                    logger.warning(
-                        f"[TOO FEW POINTS] {anno_path}: found {len(nums)} values, need 4, skipping"
-                    )
                     continue
 
                 pairs.append((img_path, anno_path, label_name))

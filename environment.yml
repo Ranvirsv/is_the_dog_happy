@@ -15,6 +15,8 @@ dependencies:
   - black=24.10.0
   - blas=1.0
   - bleach=6.2.0
+  - blosc=1.21.5
+  - boost-cpp=1.85.0
   - bottleneck=1.4.2
   - brotli=1.0.9
   - brotli-bin=1.0.9
@@ -25,6 +27,7 @@ dependencies:
   - cairo=1.16.0
   - certifi=2025.1.31
   - cffi=1.17.1
+  - cfitsio=3.470
   - charset-normalizer=3.3.2
   - click=8.1.7
   - cmake=3.29.2
@@ -72,14 +75,17 @@ dependencies:
   - exceptiongroup=1.2.2
   - executing=2.1.0
   - expat=2.6.4
-  - ffmpeg=6.1.1
+  - ffmpeg=4.2.3
   - filelock=3.13.1
   - fontconfig=2.14.1
   - fonttools=4.56.0
   - freetype=2.12.1
+  - freexl=2.0.0
   - fsspec=2024.12.0
   - gcc_impl_linux-64=13.3.0
   - gcc_linux-64=13.3.0
+  - geos=3.10.6
+  - geotiff=1.7.0
   - gettext=0.23.1
   - gettext-tools=0.23.1
   - giflib=5.2.2
@@ -87,15 +93,19 @@ dependencies:
   - glib-tools=2.78.4
   - gmp=6.3.0
   - gmpy2=2.2.1
+  - gnutls=3.6.13
+  - grad-cam=1.5.5
   - graphite2=1.3.14
   - gst-plugins-base=1.14.1
   - gstreamer=1.14.1
   - gxx_impl_linux-64=13.3.0
   - gxx_linux-64=13.3.0
   - h2=4.2.0
-  - harfbuzz=10.2.0
-  - hdf5=1.14.5
+  - harfbuzz=4.3.0
+  - hdf4=4.2.13
+  - hdf5=1.12.1
   - hpack=4.1.0
+  - huggingface_hub=0.30.2
   - hyperframe=6.1.0
   - icu=73.2
   - idna=3.7
@@ -109,10 +119,12 @@ dependencies:
   - jinja2=3.1.6
   - joblib=1.4.2
   - jpeg=9e
+  - json-c=0.16
   - jupyter_client=8.6.3
   - jupyter_core=5.7.2
   - kaggle=1.6.17
   - kagglehub=0.3.8
+  - kealib=1.5.0
   - kernel-headers_linux-64=3.10.0
   - keyutils=1.6.1
   - kiwisolver=1.4.7
@@ -127,6 +139,9 @@ dependencies:
   - libasprintf=0.23.1
   - libasprintf-devel=0.23.1
   - libblas=3.9.0
+  - libboost=1.85.0
+  - libboost-devel=1.85.0
+  - libboost-headers=1.85.0
   - libbrotlicommon=1.0.9
   - libbrotlidec=1.0.9
   - libbrotlienc=1.0.9
@@ -150,6 +165,7 @@ dependencies:
   - libgcc=14.2.0
   - libgcc-devel_linux-64=13.3.0
   - libgcc-ng=14.2.0
+  - libgdal=3.6.2
   - libgettextpo=0.23.1
   - libgettextpo-devel=0.23.1
   - libgfortran=3.0.0
@@ -158,6 +174,7 @@ dependencies:
   - libglib=2.78.4
   - libgomp=14.2.0
   - libiconv=1.18
+  - libkml=1.3.0
   - liblapack=3.9.0
   - libllvm14=14.0.6
   - libllvm19=19.1.7
@@ -166,8 +183,10 @@ dependencies:
   - libmagma=2.8.0
   - libmagma_sparse=2.8.0
   - libmlir19=19.1.7
+  - libnetcdf=4.8.1
   - libnghttp2=1.58.0
   - libnpp=12.2.5.30
+  - libnsl=2.0.1
   - libntlm=1.8
   - libnvfatbin=12.8.90
   - libnvjitlink=12.4.127
@@ -180,6 +199,7 @@ dependencies:
   - libprotobuf=4.25.3
   - libsanitizer=13.3.0
   - libsodium=1.0.18
+  - libspatialite=5.1.0
   - libsqlite=3.45.3
   - libssh2=1.11.1
   - libstdcxx=14.2.0
@@ -198,6 +218,7 @@ dependencies:
   - libxkbcommon=1.8.0
   - libxml2=2.13.5
   - libxslt=1.1.41
+  - libzip=1.10.1
   - libzlib=1.2.13
   - lit=20.1.1
   - llvm-openmp=14.0.6
@@ -207,6 +228,7 @@ dependencies:
   - matplotlib=3.9.1
   - matplotlib-base=3.9.1
   - matplotlib-inline=0.1.7
+  - minizip=4.0.6
   - mpc=1.3.1
   - mpfr=4.2.1
   - mpmath=1.3.0
@@ -216,8 +238,11 @@ dependencies:
   - nccl=2.26.2.1
   - ncurses=6.4.20240210
   - nest-asyncio=1.6.0
+  - nettle=3.6
   - networkx=3.2.1
   - nomkl=3.0
+  - nspr=4.36
+  - nss=3.100
   - numexpr=2.10.1
   - numpy=1.26.4
   - numpy-base=1.26.4
@@ -242,6 +267,9 @@ dependencies:
   - pip=25.0.1
   - pixman=0.44.2
   - platformdirs=3.10.0
+  - poppler=24.09.0
+  - poppler-data=0.4.12
+  - proj=9.3.1
   - prompt-toolkit=3.0.50
   - psutil=7.0.0
   - pthread-stubs=0.4
@@ -268,6 +296,7 @@ dependencies:
   - readline=8.2
   - requests=2.32.3
   - rhash=1.4.5
+  - safetensors=0.5.3
   - scikit-learn=1.6.1
   - scipy=1.12.0
   - seaborn=0.13.2
@@ -276,6 +305,7 @@ dependencies:
   - sip=6.5.1
   - six=1.16.0
   - sleef=3.5.1
+  - snappy=1.2.1
   - sqlite=3.45.3
   - stack_data=0.6.3
   - statsmodels=0.14.4
@@ -283,27 +313,33 @@ dependencies:
   - tesseract=5.2.0
   - text-unidecode=1.3
   - threadpoolctl=3.5.0
+  - tiledb=2.3.3
+  - timm=1.0.15
   - tk=8.6.14
   - toml=0.10.2
   - tomli=2.0.1
   - tornado=6.4.2
   - tqdm=4.67.1
   - traitlets=5.14.3
+  - ttach=0.0.3
   - typing-extensions=4.12.2
   - typing_extensions=4.12.2
   - tzdata=2025a
   - ultralytics=8.3.105
   - unicodedata2=16.0.0
   - unidecode=1.3.8
+  - uriparser=0.9.8
   - urllib3=2.3.0
   - wcwidth=0.2.13
   - webencodings=0.5.1
   - wheel=0.45.1
   - wrapt=1.17.0
+  - x264=1!152.20180806
   - xcb-util=0.4.1
   - xcb-util-cursor=0.1.5
   - xcb-util-image=0.4.0
   - xcb-util-renderutil=0.3.10
+  - xerces-c=3.2.5
   - xkeyboard-config=2.43
   - xorg-libx11=1.8.12
   - xorg-libxau=1.0.12
@@ -318,20 +354,31 @@ dependencies:
   - zstandard=0.23.0
   - zstd=1.5.6
   - pip:
-      - nvidia-cublas-cu12==12.4.5.8
-      - nvidia-cuda-cupti-cu12==12.4.127
-      - nvidia-cuda-nvrtc-cu12==12.4.127
-      - nvidia-cuda-runtime-cu12==12.4.127
-      - nvidia-cudnn-cu12==9.1.0.70
-      - nvidia-cufft-cu12==11.2.1.3
-      - nvidia-curand-cu12==10.3.5.147
-      - nvidia-cusolver-cu12==11.6.1.9
-      - nvidia-cusparse-cu12==12.3.1.170
-      - nvidia-cusparselt-cu12==0.6.2
+      - astroid==3.3.9
+      - autopep8==2.3.2
+      - dill==0.4.0
+      - isort==6.0.1
+      - mccabe==0.7.0
+      - nbqa==1.9.1
+      - nvidia-cublas-cu12==12.6.4.1
+      - nvidia-cuda-cupti-cu12==12.6.80
+      - nvidia-cuda-nvrtc-cu12==12.6.77
+      - nvidia-cuda-runtime-cu12==12.6.77
+      - nvidia-cudnn-cu12==9.5.1.17
+      - nvidia-cufft-cu12==11.3.0.4
+      - nvidia-curand-cu12==10.3.7.77
+      - nvidia-cusolver-cu12==11.7.1.2
+      - nvidia-cusparse-cu12==12.5.4.2
+      - nvidia-cusparselt-cu12==0.6.3
       - nvidia-nccl-cu12==2.21.5
-      - nvidia-nvjitlink-cu12==12.4.127
-      - nvidia-nvtx-cu12==12.4.127
+      - nvidia-nvjitlink-cu12==12.6.85
+      - nvidia-nvtx-cu12==12.6.77
+      - pycodestyle==2.13.0
+      - pylint==3.3.6
       - sympy==1.13.1
-      - torch==2.5.0
-      - torchvision==0.20.0
-      - triton==3.1.0
+      - tokenize-rt==6.1.0
+      - tomlkit==0.13.2s
+      - torch==2.6.0+cu126
+      - torchaudio==2.6.0+cu126
+      - torchvision==0.21.0+cu126
+      - triton==3.2.0

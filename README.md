@@ -26,7 +26,7 @@ You will need to run the script 2 times <br>
 
 Once you run those 2 commands the annotations will automatically by generated in the structured folder.<br>
 Then you will need to make some changes in the Setup cell inside the `/Notebooks/ViT.ipynb` file.<br>
-Change the path in the setup file to `sys.path.insert(1, '/path/to/is_the_dog_happy')`<br>
+Change `sys.path.insert(1, "/mnt/c/Eclipse/IU Spring 2025/is_the_dog_happy")` in the setup cell to `sys.path.insert(1, '/path/to/is_the_dog_happy')`<br>
 Now You can run the entier [ViT.ipynb](Notebooks/VIT.ipynb) notebook file.<br>
 
 For more Information about DataLoader, YOLO models, DFF and GradCAM see below.

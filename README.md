@@ -123,3 +123,59 @@ After you got data, you use get_data_loaders.py to give you the train, val and t
 
 * ![Output1](dff_outputs/image_1.png)
 * ![Output2](dff_outputs/image_2.png)
+
+## GradCAM Overlays for ViT Model Feature Attention on Dog Images
+
+Gradient‑weighted Class Activation Mapping (GradCAM) produces coarse localization heatmaps by back‑propagating gradients from a target class score into a chosen convolutional layer. This reveals which spatial regions the model relied on most when predicting a particular emotion.
+
+**GradCAM workflow**  
+*⁠  ⁠**Select target class**: choose the predicted emotion label (e.g. “Happy,” “Sad,” “Angry”).  
+*⁠  ⁠**Choose target layer**: typically the last convolutional (or patch embedding) layer in your ViT.  
+*⁠  ⁠**Compute gradients**: back‑propagate the class score to obtain gradients w.r.t. the feature maps.  
+*⁠  ⁠**Weight feature maps**: average the gradients over spatial dimensions to produce channel‐wise importance weights.  
+*⁠  ⁠**Generate heatmap**: combine the weighted feature maps and apply a ReLU to obtain a coarse map.  
+*⁠  ⁠**Overlay**: resize and blend the heatmap with the original RGB image for visualization.
+
+This allows us to:  
+*⁠  ⁠Visually inspect whether the model attends to face, ears or body posture.  
+*⁠  ⁠Compare focus patterns across annotation regimes.  
+*⁠  ⁠Diagnose misclassifications by seeing if attention drifts to background.
+
+### Notebook Structure
+
+1.⁠ **Preprocessing**  
+   - Load test images from disk  
+   - Apply ⁠ torchvision.transforms ⁠ (resize, center‑crop, normalize)  
+
+2.⁠ ⁠**Model Loading**
+   - Import your pretrained ViT  
+   - Move to ⁠ cuda ⁠/⁠ cpu ⁠ and set to ⁠ eval() ⁠  
+
+3.⁠ ⁠**GradCAM Setup** 
+   - Import ⁠ GradCAM ⁠ and ⁠ ClassifierOutputTarget ⁠ from ⁠ pytorch_grad_cam ⁠  
+   - Specify ⁠ target_layers = [model.patch_embed.proj] ⁠ (or equivalent)  
+   - Instantiate ⁠ cam = GradCAM(model, target_layers, use_cuda=...) ⁠  
+
+4.⁠ ⁠**Forward Pass & Gradient Computation**  
+   - Run ⁠ outputs = model(input_tensor) ⁠  
+   - Identify ⁠ pred_class = outputs.argmax() ⁠  
+   - Call ⁠ grayscale_cam = cam(input_tensor, targets=[ClassifierOutputTarget(pred_class)]) ⁠  
+
+5.⁠ ⁠**Heatmap Generation**
+   - Extract the first mask: ⁠ mask = grayscale_cam[0] ⁠  
+   - Normalize and convert to color  
+
+6.⁠ ⁠**Overlay & Visualization** 
+   - Use ⁠ show_cam_on_image(rgb_img, mask) ⁠ to blend  
+   - Display with ⁠ matplotlib.pyplot ⁠  
+   - Save overlays to ⁠ results/gradcam_<emotion>.png ⁠  
+
+7.⁠ ⁠**Batch Processing**
+   - Loop over multiple images and classes  
+   - Automate saving and logging of outputs
+
+### Outputs
+
+* ![Output1](gradcam_outputs/image_1.png)
+* ![Output2](gradcam_outputs/image_2.png)
+* ![Output3](gradcam_outputs/image_3.png)
